@@ -36,9 +36,6 @@ class Settings(BaseSettings):
         default=None,
         description="Base URL for LangSmith API",
     )
-    index_name: str = Field(
-        default="code-index", description="Index name for code-related data in Pinecone"
-    )
 
 
 settings = Settings()
