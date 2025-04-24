@@ -23,6 +23,8 @@ dependencies = [
 [tool.poetry]
 packages = [{ include = "decodeon", from = "src" }]
 
+[tool.poetry.scripts]
+start = "bin.runner:run"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

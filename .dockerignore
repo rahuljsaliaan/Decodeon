@@ -1,0 +1,34 @@
+# Ignore virtual environments
+.venv/
+env/
+venv/
+
+# Ignore Python bytecode files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore editor and IDE config files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore operating system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore build artifacts
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Ignore .env files or other sensitive configuration
+.env
+
+# Ignore test files (if not needed in the image)
+tests/
