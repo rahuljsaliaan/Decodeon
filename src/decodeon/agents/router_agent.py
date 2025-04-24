@@ -12,6 +12,7 @@ from decodeon.types import TypedAgentExecutor, ReactAgentInput, StrDictAny
 from decodeon.types.enums import OpenAIModelEnum
 
 
+# Create llm, prompt, and parser for the router agent
 llm = ChatOpenAI(
     api_key=settings.openai_api_key,
     model=OpenAIModelEnum.gpt_4o_mini.value,
@@ -22,13 +23,28 @@ parser = PydanticOutputParser(pydantic_object=CSVAgentInput)
 
 
 def python_agent_executor_wrapper(original_prompt: str) -> StrDictAny:
+    """
+    Wrapper function to execute the Python agent with the provided prompt.
+    This function is used to handle the input and output of the Python agent.
+
+    Args:
+        original_prompt (str): The prompt to be executed by the Python agent.
+    """
+
     return create_python_agent().invoke(input={"input": original_prompt})
 
 
 def csv_agent_executor_wrapper(input_str: str) -> StrDictAny:
-    input_data = parser.parse(input_str)
+    """
+    Wrapper function to execute the CSV agent with the provided input string.
+    This function is used to handle the input and output of the CSV agent.
 
-    print(input_data.model_dump())
+    Args:
+        input_str (str): The input string containing the CSV file path and instructions.
+    """
+
+    # Parse the input string to extract the CSV file path and instructions
+    input_data = parser.parse(input_str)
 
     return create_csv_agent(path=input_data.path).invoke(
         input={"input": input_data.input}
@@ -36,6 +52,13 @@ def csv_agent_executor_wrapper(input_str: str) -> StrDictAny:
 
 
 def create_router_agent():
+    """
+    Create a router agent that can handle both Python and CSV tasks.
+
+    This agent uses the LangChain library to create a React agent with specific tools and prompts.
+    """
+
+    # Register the tools for the agent.
     tools = [
         Tool(
             name="Python Agent",
@@ -71,19 +94,18 @@ def create_router_agent():
         ),
     ]
 
+    # Create the agent using the prompt, LLM, and tools
     agent = create_react_agent(
         llm=llm,
         prompt=base_prompt,
         tools=tools,
     )
 
-    agent_executor = TypedAgentExecutor[ReactAgentInput](
+    return TypedAgentExecutor[ReactAgentInput](
         AgentExecutor(
             agent=agent, tools=tools, verbose=True, handle_parsing_errors=True
         )
     )
-
-    return agent_executor
 
 
 if __name__ == "__main__":

@@ -1,4 +1,3 @@
-from typing import List
 import streamlit as st
 from langchain_core.output_parsers import StrOutputParser
 
@@ -13,6 +12,8 @@ def new_chat(
     user_query: str,
     ai_output: str,
 ):
+    """Display a new chat message in the Streamlit app."""
+
     st.chat_message("user").write(user_query)
     formatted_output = parser.parse(ai_output).strip()
     st.chat_message("ai").write(formatted_output)
@@ -24,6 +25,8 @@ def new_chat(
 
 
 def init_chat_history():
+    """Initialize the chat history in the session state."""
+
     if SessionStateEnum.chat_history not in st.session_state:
         st.session_state[SessionStateEnum.chat_history] = ChatHistoryList([])
 

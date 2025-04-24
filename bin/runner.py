@@ -8,11 +8,9 @@ def run():
     # Set the app based on the environment
     if settings.environment == EnvironmentEnum.development:
         reload = True
-        app_dir = "src"
         host = "127.0.0.1"
     else:
         reload = False
-        app_dir = None
         host = "0.0.0.0"
 
     # Command to run Streamlit from a Python script

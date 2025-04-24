@@ -1,4 +1,3 @@
-from typing import Optional
 from langchain_openai import ChatOpenAI
 from langchain_experimental.agents import create_csv_agent as create_inbuilt_csv_agent
 
@@ -14,10 +13,16 @@ llm = ChatOpenAI(
 
 
 def create_csv_agent(path: str = None):
+    """
+    Create a CSV agent using the LangChain library.
+    Args:
+        path (str): Path to the CSV file.
+    """
+
     if path is None:
         raise FileNotFoundError("File path not provided!")
 
-    agent_executor = TypedAgentExecutor[ReactAgentInput](
+    return TypedAgentExecutor[ReactAgentInput](
         create_inbuilt_csv_agent(
             llm=llm,
             path=path,
@@ -26,8 +31,6 @@ def create_csv_agent(path: str = None):
             allow_dangerous_code=True,
         )
     )
-
-    return agent_executor
 
 
 if __name__ == "__main__":

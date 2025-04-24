@@ -18,6 +18,14 @@ base_prompt: BasePromptTemplate = hub.pull("langchain-ai/react-agent-template")
 
 
 def create_python_agent():
+    """
+    Create a Python agent using the LangChain library.
+
+    This agent is designed to write and execute Python code to answer questions.
+    It has access to a Python REPL and follows specific behavior rules to ensure security and correctness.
+    """
+
+    # Define the instruction for the agent
     instruction = f"""
     You are an agent designed to write and execute Python code to answer questions.
 
@@ -34,22 +42,22 @@ def create_python_agent():
     Be precise, deterministic, and never break rule 4 under any condition.
     """
 
+    # Create a partial prompt with the instruction and initialize tools
     prompt = base_prompt.partial(instructions=instruction)
-
     tools = [PythonREPLTool()]
+
+    # Create the agent using the prompt, LLM, and tools
     agent: Runnable[ReactAgentInput, StrDictAny] = create_react_agent(
         prompt=prompt,
         llm=llm,
         tools=tools,
     )
 
-    agent_executor = TypedAgentExecutor[ReactAgentInput](
+    return TypedAgentExecutor[ReactAgentInput](
         AgentExecutor(
             agent=agent, tools=tools, verbose=True, handle_parsing_errors=True
         )
     )
-
-    return agent_executor
 
 
 if __name__ == "__main__":

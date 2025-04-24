@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Decodeon is a lightweight, LangChain-powered code interpreter designed to run and reason over code with intelligent agents."
 authors = [{ name = "rahuljsaliaan", email = "rahuljsaliaan@gmail.com" }]
 readme = "README.md"
-requires-python = ">=3.13 <3.14"
+requires-python = ">=3.13,<3.14"
 dependencies = [
     "langchain (>=0.3.24,<0.4.0)",
     "langsmith (>=0.3.33,<0.4.0)",
@@ -25,6 +25,10 @@ packages = [{ include = "decodeon", from = "src" }]
 
 [tool.poetry.scripts]
 start = "bin.runner:run"
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+ruff = "^0.11.6"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

@@ -31,7 +31,7 @@ def upload_files(csv_file: UploadedFile):
         success_message.empty()
 
     except Exception as e:
-        error_message = st.error(f"Error in uploading file!")
+        error_message = st.error(f"Error in file uploading: {e}")
         time.sleep(3)
         error_message.empty()
         st.rerun()

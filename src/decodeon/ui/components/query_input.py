@@ -4,6 +4,8 @@ from decodeon.types.enums import SessionStateEnum
 
 
 def init_query_input():
+    """Initialize the query input field."""
+
     placeholder = (
         "Ask about the CSV file's contents, processing, or any code-related questions (Python)."
         if st.session_state.get(SessionStateEnum.csv_path)
