@@ -1,4 +1,4 @@
-from typing import TypedDict, TypeVar, Dict, Generic, Any
+from typing import TypedDict, TypeVar, Dict, Generic, Optional, Any
 from langchain.agents import AgentExecutor
 from langchain_core.runnables import RunnableConfig
 
@@ -9,6 +9,7 @@ TInput = TypeVar("TInput")
 
 class ReactAgentInput(TypedDict):
     input: str
+    instructions: Optional[str]
 
 
 class TypedAgentExecutor(Generic[TInput]):

@@ -3,6 +3,9 @@ from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+from decodeon.types.enums import EnvironmentEnum
+
+
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         env_file=".env", env_file_encoding="utf-8", extra="ignore"
@@ -18,8 +21,9 @@ class Settings(BaseSettings):
         default=None, description="API key for LangSmith for LangChain integration"
     )
 
-    environment: str = Field(
-        "development", description="Environment type (development, production, etc.)"
+    environment: EnvironmentEnum = Field(
+        EnvironmentEnum.production,
+        description="Environment type (development, production, etc.)",
     )
     port: int = Field(8000, description="The port the server will run on")
     langchain_tracing_v2: bool = Field(

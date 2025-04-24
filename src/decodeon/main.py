@@ -1,6 +1,9 @@
+from decodeon.ui import app
+
+
 def main():
-    print("Hello, DecodEON!")
+    app()
 
 
 if __name__ == "__main__":
-    pass
+    main()

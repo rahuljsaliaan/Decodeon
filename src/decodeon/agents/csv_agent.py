@@ -3,19 +3,19 @@ from langchain_openai import ChatOpenAI
 from langchain_experimental.agents import create_csv_agent as create_inbuilt_csv_agent
 
 from decodeon.core import settings
-from decodeon.types.enums import OpenAIModel
+from decodeon.types.enums import OpenAIModelEnum
 from decodeon.types import TypedAgentExecutor, ReactAgentInput
 
 llm = ChatOpenAI(
     api_key=settings.openai_api_key,
-    model=OpenAIModel.gpt_4.value,
+    model=OpenAIModelEnum.gpt_4.value,
     temperature=0,
 )
 
 
-def create_csv_agent(path: Optional[str] = None):
+def create_csv_agent(path: str = None):
     if path is None:
-        path = "assets/episode_info.csv"
+        raise FileNotFoundError("File path not provided!")
 
     agent_executor = TypedAgentExecutor[ReactAgentInput](
         create_inbuilt_csv_agent(

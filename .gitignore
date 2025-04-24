@@ -1,9 +1,10 @@
 # Ignore VS Code workspace settings
 .vscode/
 
-# Ignore generated files
-generated/
 
+# Ignore generated files and data files
+generated/
+data/
 # Created by https://www.toptal.com/developers/gitignore/api/python
 # Edit at https://www.toptal.com/developers/gitignore?templates=python
 
