@@ -2,7 +2,7 @@
 
 [![Railway](https://img.shields.io/badge/Hosted%20on-Railway-blue?logo=railway)](https://decodeon-production.up.railway.app/)
 
-Welcome to **DecodEON**, a lightweight and intelligent code interpreter built with the power of LangChain. Decodeon enables developers to interact with and reason over code using AI agents — streamlining debugging, understanding, and automation in a single, intuitive interface.
+Welcome to **Decodeon**, a lightweight and intelligent code interpreter built with the power of LangChain. Decodeon enables developers to interact with and reason over code using AI agents — streamlining debugging, understanding, and automation in a single, intuitive interface.
 
 ## Live App
 
