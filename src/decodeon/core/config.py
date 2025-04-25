@@ -36,6 +36,10 @@ class Settings(BaseSettings):
         default=None,
         description="Base URL for LangSmith API",
     )
+    chat_max_tokens: int = Field(
+        default=4096,
+        description="Maximum number of tokens for messages in the chat history. (One message = 1 token)",
+    )
 
 
 settings = Settings()

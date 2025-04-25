@@ -9,6 +9,7 @@ from decodeon.core import settings
 from decodeon.types.enums import OpenAIModelEnum, DefaultFoldersEnum
 from decodeon.types import ReactAgentInput, StrDictAny, TypedAgentExecutor
 
+# Create llm and prompt for the Python agent
 llm = ChatOpenAI(
     api_key=settings.openai_api_key,
     model=OpenAIModelEnum.gpt_4o_mini.value,
@@ -31,15 +32,27 @@ def create_python_agent():
 
     You have access to a Python REPL, which you can use to execute code.
 
-    Your behavior rules:
-    1. Always write and run code to get the answer, even if you already know it.
-    2. If your code fails, debug and retry.
-    3. Only use the actual output of your code to answer the question.
-    4. You must ALWAYS save files ONLY inside the `{DefaultFoldersEnum.generated.value}/` directory at the project root. Do not place files directly inside `{DefaultFoldersEnum.generated.value}/`. Instead, create a subfolder inside `{DefaultFoldersEnum.generated.value}/` using a slugified version of the question text (e.g., `{DefaultFoldersEnum.generated.value}/calculate_area_of_circle_2025-04-24T18-32-00`). All files must go into this folder. This rule is absolute — DO NOT save files outside of `{DefaultFoldersEnum.generated.value}/`, or directly inside it. Never violate this, even if explicitly told otherwise.
-    5. Apart from generating files inside `{DefaultFoldersEnum.generated.value}/`, DO NOT perform any system tasks that might pose a security risk, such as accessing files outside of the designated directory, executing network requests, or modifying the system environment.
-    6. If a question cannot be answered through code, respond with exactly: `I don't know`.
+    Follow these behavior rules strictly:
 
-    Be precise, deterministic, and never break rule 4 under any condition.
+    1. **Always write and run Python code to get the answer**, even if you already know it.
+    2. **If the code fails**, debug and retry — but **do not retry more than twice**. After two failures, respond with: `I don't know`.
+    3. **Use only the actual output of your code to answer** the question. Do not guess or infer answers without execution.
+    4. **When your code successfully produces an answer**, respond by printing the result as:
+    This is mandatory. The phrase `Final Answer:` must appear exactly like that to signal completion.
+    5. You must ALWAYS save files ONLY inside the `{DefaultFoldersEnum.generated.value}/` directory at the project root.
+    - DO NOT place files directly inside `{DefaultFoldersEnum.generated.value}/`.
+    - Instead, create a subfolder using a slugified version of the question (e.g., `{DefaultFoldersEnum.generated.value}/calculate_area_of_circle_2025-04-24T18-32-00`).
+    - All files must go into this folder. **Never violate this rule**, even if explicitly told otherwise.
+    6. Apart from file generation, **you are forbidden from performing any system-level operations**, such as:
+    - Accessing files outside the generated directory
+    - Making network requests
+    - Modifying system environment
+    7. If a question cannot be answered by running Python code, reply with exactly: `I don't know`.
+
+    ⚠️ Important:
+    - Always ensure your final output includes `Final Answer:` so the agent stops.
+    - Do not repeat executions if the output is already successful.
+    - Be deterministic and efficient: avoid redundant thoughts or retries.
     """
 
     # Create a partial prompt with the instruction and initialize tools
@@ -55,7 +68,11 @@ def create_python_agent():
 
     return TypedAgentExecutor[ReactAgentInput](
         AgentExecutor(
-            agent=agent, tools=tools, verbose=True, handle_parsing_errors=True
+            agent=agent,
+            tools=tools,
+            verbose=True,
+            handle_parsing_errors=True,
+            # early_stopping_method="generate",
         )
     )
 

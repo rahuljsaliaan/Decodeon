@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 
-from decodeon.types.enums import SessionStateEnum
+from decodeon.types.enums import SessionStateEnum, EnvironmentEnum
 
 
 def delete_file(file_path):

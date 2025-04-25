@@ -4,11 +4,12 @@ from datetime import datetime
 import streamlit as st
 from streamlit.runtime.uploaded_file_manager import UploadedFile
 
-from decodeon.types.enums import SessionStateEnum
-from decodeon.types.enums import DefaultFoldersEnum
+from decodeon.types.enums import SessionStateEnum, DefaultFoldersEnum
 
 
 def upload_files(csv_file: UploadedFile):
+    """Upload a file to the server and save it in a specific directory."""
+
     try:
         # Create the file path
         current_date_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -33,5 +34,5 @@ def upload_files(csv_file: UploadedFile):
     except Exception as e:
         error_message = st.error(f"Error in file uploading: {e}")
         time.sleep(3)
-        error_message.empty()
-        st.rerun()
+        # error_message.empty()
+        # st.rerun()

@@ -10,6 +10,7 @@ TInput = TypeVar("TInput")
 class ReactAgentInput(TypedDict):
     input: str
     instructions: Optional[str]
+    chat_history: Optional[str]
 
 
 class TypedAgentExecutor(Generic[TInput]):

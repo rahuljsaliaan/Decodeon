@@ -16,6 +16,7 @@ from decodeon.core.utils import get_file_name_without_ext
 
 # Initialize the output parser and agent
 parser = StrOutputParser()
+# Initialize the agent executor
 agent_executor = create_router_agent()
 
 
@@ -73,11 +74,12 @@ def app():
                 # Show error message and auto-hide after delay
                 error_message = st.error(f"Some Error occurred {e}")
                 time.sleep(3)
-                error_message.empty()
+                # error_message.empty()
+
             finally:
                 # Reset action state and rerun the app
                 st.session_state[SessionStateEnum.action_in_progress] = False
-                st.rerun()
+                # st.rerun()
 
 
 if __name__ == "__main__":
