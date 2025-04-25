@@ -62,7 +62,7 @@ def app():
                     {
                         "input": user_query.text,
                         "instructions": f"""
-                            File path: {current_working_file or "no file path provided"}                          
+                            File path: {st.session_state.get(SessionStateEnum.csv_path) or "no file path provided"}
                         """,
                         "chat_history": chat_history.formatted_output,
                     }
@@ -74,12 +74,12 @@ def app():
                 # Show error message and auto-hide after delay
                 error_message = st.error(f"Some Error occurred {e}")
                 time.sleep(3)
-                # error_message.empty()
+                error_message.empty()
 
             finally:
                 # Reset action state and rerun the app
                 st.session_state[SessionStateEnum.action_in_progress] = False
-                # st.rerun()
+                st.rerun()
 
 
 if __name__ == "__main__":

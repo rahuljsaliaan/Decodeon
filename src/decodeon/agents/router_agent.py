@@ -83,6 +83,7 @@ def create_router_agent():
             func=csv_agent_executor_wrapper,
             description=f"""
             Use this tool to analyze or extract insights from a CSV file.
+            If you don't have context but have a CSV file path, use this tool to analyze the file.
 
             🧾 Input must be a dictionary with the following keys:
             - "path": Full file path to the CSV file 
