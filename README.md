@@ -1,4 +1,4 @@
-# **Decodeon – LangChain-Powered Code Interpreter**
+# **DecodEON – LangChain-Powered Code Interpreter**
 
 [![Railway](https://img.shields.io/badge/Hosted%20on-Railway-blue?logo=railway)](https://decodeon-production.up.railway.app/)
 

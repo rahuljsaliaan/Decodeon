@@ -27,7 +27,7 @@ def app():
     init_page_config()
 
     # App title
-    st.title("Decodeon: LangChain-Powered Code Interpreter and csv file analyzer")
+    st.title("DecodEON: LangChain-Powered Code Interpreter and csv file analyzer")
 
     # Display current working file if uploaded
     current_working_file = st.session_state.get(SessionStateEnum.csv_path)
